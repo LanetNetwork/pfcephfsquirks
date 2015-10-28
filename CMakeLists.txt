@@ -40,8 +40,6 @@ include_directories(.
 	pfcquirks
 	${CEPHFS_INCLUDE_DIRS})
 
-add_subdirectory(pfcquirks)
-
 add_library(ln_pfcfsq
 	STATIC
 	pfcfsq.c
