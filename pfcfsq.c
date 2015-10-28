@@ -30,6 +30,48 @@
 
 static pthread_mutex_t cfs_mkdir_safe_lock = PTHREAD_MUTEX_INITIALIZER;
 
+struct ceph_mount_info* cfs_mount(const char* _mons, const char* _id, const char* _keyring_file, const char* _root)
+{
+	struct ceph_mount_info* ret = NULL;
+
+	if (unlikely(ceph_create(&ret, _id) != 0))
+		goto out;
+
+	if (unlikely(ceph_conf_set(ret, "mon_host", _mons) != 0))
+		goto err_release;
+
+	if (unlikely(ceph_conf_set(ret, "keyring", _keyring_file) != 0))
+		goto err_release;
+
+	if (unlikely(ceph_init(ret) != 0))
+		goto err_release;
+
+	if (unlikely(ceph_mount(ret, _root) != 0))
+		goto err_release;
+
+	goto out;
+
+err_release:
+	ceph_release(ret);
+	ret = NULL;
+
+out:
+	return ret;
+}
+
+int cfs_unmount(struct ceph_mount_info* _fs)
+{
+	int ret = -1;
+
+	if (unlikely(ceph_unmount(_fs) != 0))
+		return ret;
+
+	if (unlikely(ceph_release(_fs) != 0))
+		return ret;
+
+	return 0;
+}
+
 int cfs_mkdir_safe(struct ceph_mount_info* _fs, const char* _path, mode_t _mode)
 {
 	int ret = 0;
