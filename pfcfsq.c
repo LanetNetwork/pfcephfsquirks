@@ -16,8 +16,6 @@
  * limitations under the License.
  */
 
-#define _FILE_OFFSET_BITS 64
-
 #include <dirent.h>
 #include <errno.h>
 #include <libcephfs.h>
