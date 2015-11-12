@@ -89,7 +89,7 @@ int cfs_mkdir_safe(struct ceph_mount_info* _fs, const char* _path, mode_t _mode)
 	return ret;
 }
 
-void walk_dir_generic(struct ceph_mount_info* _fs, const char* _entry_point, cfs_dentry_handler_t _handler, cfs_dentry_comparator_t _comparator, void* _data, unsigned int _level)
+void cfs_walk_dir_generic(struct ceph_mount_info* _fs, const char* _entry_point, cfs_dentry_handler_t _handler, cfs_dentry_comparator_t _comparator, void* _data, unsigned int _level)
 {
 	int ceph_opendir_res = -1;
 	int ceph_readdirplus_r_res = 0;

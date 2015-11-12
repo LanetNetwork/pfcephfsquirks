@@ -26,7 +26,7 @@ typedef int (*cfs_dentry_comparator_t)(const char*, struct dirent*, struct stat*
 struct ceph_mount_info* cfs_mount(const char* _mons, const char* _id, const char* _keyring_file, const char* _root) __attribute__((nonnull(1, 2, 3, 4)));
 int cfs_unmount(struct ceph_mount_info* _fs) __attribute__((nonnull(1)));
 int cfs_mkdir_safe(struct ceph_mount_info* _fs, const char* _path, mode_t _mode);
-void walk_dir_generic(struct ceph_mount_info* _fs, const char* _entry_point, cfs_dentry_handler_t _handler, cfs_dentry_comparator_t _comparator, void* _data, unsigned int _level) __attribute__((nonnull(1, 2, 3)));
+void cfs_walk_dir_generic(struct ceph_mount_info* _fs, const char* _entry_point, cfs_dentry_handler_t _handler, cfs_dentry_comparator_t _comparator, void* _data, unsigned int _level) __attribute__((nonnull(1, 2, 3)));
 
 #endif /* __PFGFQ_H__ */
 
